@@ -1,0 +1,18 @@
+elasticsearch_master:
+    image: elasticsearch:1.7.5
+    command: "elasticsearch -Des.cluster.name=esdockercluster -Des.node.master=true -Des.node.data=false"
+    environment:
+       - ES_HEAP_SIZE=512m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+elasticsearch1:
+    image: elasticsearch:1.7.5
+    command: "elasticsearch -Des.cluster.name=esdockercluster -Des.discovery.zen.ping.unicast.hosts=elasticsearch_master"
+    links:
+      - elasticsearch_master
+    volumes:
+      - "/opt/elasticsearch/data"
+    environment:
+       - ES_HEAP_SIZE=512m

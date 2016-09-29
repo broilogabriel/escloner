@@ -12,6 +12,7 @@ import org.elasticsearch.index.query.QueryBuilders
 object Main extends App {
 
   val client = Cluster.getCluster("remotecluster", "localhost", 9301)
+//  val mapping = client.admin() // https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/java-admin-indices.html
   val response = client.prepareSearch().setSearchType(SearchType.QUERY_AND_FETCH).
     setQuery(QueryBuilders.matchAllQuery()).execute().actionGet()
   println(response.toString)
